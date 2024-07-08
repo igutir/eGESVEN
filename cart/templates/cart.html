@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block contenido %}
+
+<div class="d-flex justify-content-center m-4 ps-4">
+    <h1>
+        Carrito de compras
+    </h1>
+</div>
+
+<div class="d-flex justify-content-center mx-auto" style="max-width: 1000px;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">+1</th>
+                <th scope="col">-1</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if request.session.cart.items %}
+                {% for key, value in request.session.cart.items %}
+                <tr>
+                    <td>{{ value.nombre }}</td>
+                    <td>${{ value.precio }}</td>
+                    <td>{{ value.cantidad }}</td>
+                    <td><a href="{% url 'agregar_cart' value.id_producto %}" class="btn btn-success">+</a></td>
+                    <td><a href="{% url 'disminuir_cart' value.id_producto %}" class="btn btn-danger">-</a></td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5">
+                        <div class="alert alert-danger text-center">
+                            No hay productos en el carrito
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+                <tr>
+                    <th scope="row">Total:</th>
+                    <td>${{cart.obtener_total}}</td>
+                    <td>{{cart.obtener_productos_en_carrito}}</td>
+                </tr>
+        </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div class="d-flex justify-content-center">
+    <a href="{% url 'home' %}" class="btn btn-secondary m-2">Atrás</a>
+    <a href="{% url 'limpiar_cart' %}" class="btn btn-success m-2">Limpiar Carrito</a>
+</div>
+
+{% endblock %}

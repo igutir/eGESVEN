@@ -1,0 +1,11 @@
+{% load custom_tags %}
+
+{% for categoria in categorias %}
+
+    <li>
+        <a class="dropdown-item" href="{% url 'categoria' id=categoria.id %}">
+            {{ categoria.nombre }}
+        </a>
+    </li>
+
+{% endfor %}

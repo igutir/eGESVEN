@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block contenido %}
+
+<div class="d-flex justify-content-center m-4 ps-4">
+    <h1>
+        Editar perfil
+    </h1>
+</div>
+
+
+{% if form_usuario.errors %}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <div id="form_errors">
+            {% for key, value in form_usuario.errors.items %}
+                <strong>{{ value }}</strong>
+            {% endfor %}
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endif %}
+
+<div class="d-flex justify-content-center">
+    <div class="row">
+        <form class="col-12 col-sm-12 col-lg-12" id="editarPerfil" action="" method="POST">
+            {% csrf_token %}
+
+            {{form_user | crispy}}
+
+            {{form_profile | crispy}}
+
+            <div class="d-flex justify-content-center mt-3">
+                <p><a href="{% url 'password_change' %}" class="link-underline-primary">Cambiar contraseña</a></p>
+            </div>
+            <hr class="my-4">
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary m-2">Guardar cambios</button>
+                <button type="reset" class="btn btn-danger m-2">Limpiar campos</button>
+            </div>
+        </form>
+        <hr class="my-4">
+
+    </div>
+</div>
+
+{% endblock %}

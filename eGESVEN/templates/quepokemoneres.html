@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block css %}
+<style>
+:root {
+  --red-fueguito: hsl(0, 94%, 50%);
+  --blue-agua: hsl(224, 94%, 50%);
+  --dark-cyan: hsl(185, 75%, 39%);
+  --very-dark-desaturated: hsl(229, 23%, 23%);
+  --dark-grayish-blue: hsl(227, 10%, 46%);
+  --dark-gray: hsl(0, 0%, 59%);
+}
+
+
+.ereseste{
+  text-align: center;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 70vh;
+}
+
+
+.card {
+  background-color: white;
+  width: 500px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.card-header {
+  width: 100%;
+  height: 200px;
+  display: block;
+}
+
+.card-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid rgba(153, 153, 153, 0.383);
+}
+
+.card-body-img {
+  width: 200px;
+  height: 200px;
+  border: 5px solid rgb(247, 2, 2);
+  border-radius: 50%;
+  margin-top: calc(-48px - 5px);
+  background-color: rgb(68, 130, 245);
+}
+
+.card-body-title {
+  color: var(--very-dark-desaturated);
+  margin-top: 2rem;
+  font-size: 1.8rem;
+  text-transform: capitalize;
+}
+
+.card-body-title span {
+  color: var(--red-fueguito);
+  font-weight: 400;
+}
+
+.card-body-text {
+  color: var(--very-dark-desaturated);
+  font-size: 1.6rem;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.card-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.card-footer-social {
+  color: var(--blue-agua);
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+
+.card-footer-social p {
+  letter-spacing: 1px;
+}
+
+p{
+  padding: 5px;
+}
+</style>
+{% endblock %}
+
+{% block contenido %}
+
+<br>
+<h1 class="ereseste">
+  ERES ESTE POKEMON
+</h1>
+
+<main class="flex"></main>
+
+<template id="card">
+    <article class="card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE833X_-B6wp9WAYq_IBYZ0WgPY6Tjk58Quw&usqp=CAU" alt="imagen header card" class="card-header">
+        <div class="card-body">
+            <img src="https://files.cults3d.com/uploaders/14307074/illustration-file/068cc8b6-4dc7-4ee1-994e-1af6bbaab819/render0001.png" alt="imagen sombra" class="card-body-img">
+            <h1 class="card-body-title">
+              nombre
+                <span>hp</span>
+            </h1>
+            <p class="card-body-text">tipo</p>
+        </div>
+        <div class="card-footer">
+            <div class="card-footer-social">
+                <h3></h3>
+                <p>Ataque</p>
+            </div>
+            <div class="card-footer-social">
+                <h3></h3>
+                <p>Ataque Especial</p>
+            </div>
+            <div class="card-footer-social">
+                <h3></h3>
+                <p>Defensa</p>
+            </div>
+            <div class="card-footer-social">
+              <h3></h3>
+              <p>Defensa Especial</p>
+            </div>
+            <div class="card-footer-social">
+              <h3></h3>
+              <p>Velocidad</p>
+            </div>
+        </div>
+    </article>
+</template>
+{% endblock %}
+
+{% block js %}
+
+<script>
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const ramdom = getRandomInt(1, 151)
+    fetchData(ramdom)
+})
+
+const fetchData = async (id) => {
+    try {
+        console.log(id)
+        
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+        const data = await res.json()
+
+        const tipos = data.types.map(type => type.type.name);
+        
+        console.log(data)
+
+        const pokemon = {
+            img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`,
+            imgProducto: data.sprites.front_default,
+            nombre: data.name,
+            tipos: tipos,
+            hp: data.stats[0].base_stat,
+            ataque: data.stats[1].base_stat,
+            defensa: data.stats[2].base_stat,
+            atespecial: data.stats[3].base_stat,
+            deespecial: data.stats[4].base_stat,
+            velocidad: data.stats[5].base_stat,
+        }
+
+        pintarCard(pokemon)
+    
+    } catch (error) {
+        console.log(error)
+    }
+} 
+
+const pintarCard = pokemon => {
+    const flex = document.querySelector('.flex')
+    const template = document.getElementById('card').content
+    const clone = template.cloneNode(true)
+    const fragment = document.createDocumentFragment()
+
+    clone.querySelector('.card-body-img').setAttribute('src', pokemon.imgProducto)
+    clone.querySelector('.card-body-title').innerHTML = `${pokemon.nombre} <span>${pokemon.hp}hp</span>`
+    clone.querySelector('.card-body-text').textContent = pokemon.tipos.join(' & ');
+    clone.querySelectorAll('.card-footer-social h3')[0].textContent = pokemon.ataque
+    clone.querySelectorAll('.card-footer-social h3')[1].textContent = pokemon.atespecial
+    clone.querySelectorAll('.card-footer-social h3')[2].textContent = pokemon.defensa
+    clone.querySelectorAll('.card-footer-social h3')[3].textContent = pokemon.deespecial
+    clone.querySelectorAll('.card-footer-social h3')[4].textContent = pokemon.velocidad
+
+    fragment.appendChild(clone)
+    flex.appendChild(fragment)
+}
+</script>
+
+
+{% endblock %}

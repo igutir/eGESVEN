@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+<div class="d-flex justify-content-center m-4 ps-4">
+    <h1>
+        Categor&iacute;a: {{ categoria.nombre }}
+    </h1>
+</div>
+
+
+
+<div class="d-flex justify-content-center">
+    <div class="row">
+
+        {% for producto in productos_categoria %}
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 mt-3" align="center">
+            <div class="card h-100 text-start" style="width: 350px;">
+                <a href="{% url 'producto' id=producto.id %}" class="btn btn-primary">
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="...">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    <p>
+                        <font size="5">Precio: ${{ producto.precio }}</font>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+        
+    </div>
+</div>
+
+<div class="d-flex justify-content-center mt-3">
+    <a href="{% url 'home' %}" class="btn btn-primary m-2">Atrás</a>
+</div>
+
+
+{% endblock %}

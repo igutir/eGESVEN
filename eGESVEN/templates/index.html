@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+
+<div class="d-flex justify-content-center m-4 ps-4">
+    <h1>
+        Destacados
+    </h1>
+</div>
+
+<!--Carrusel-->
+<div id="carouselIndex" class="carousel slide" data-bs-ride="carousel" data-bs-theme="light">
+    <div class="carousel-inner">
+
+        {% for producto in productos %}
+
+            {% if forloop.first %}
+
+                <div class="carousel-item active">
+                    <a href="{% url 'producto' id=producto.id %}">
+                        <img src="{{ producto.imagen_carrusel.url }}" class="d-block w-100" alt="..." height="600">
+                    </a>
+                </div>
+
+            {% else %}
+
+                <div class="carousel-item">
+                    <a href="{% url 'producto' id=producto.id %}">
+                        <img src="{{ producto.imagen_carrusel.url }}" class="d-block w-100" alt="..." height="600">
+                    </a>
+                </div>
+
+            {% endif %}
+
+
+        {% endfor %}
+    </div>   
+</div>
+
+{% endblock %}
