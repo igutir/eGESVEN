@@ -71,14 +71,14 @@ def producto(request, id):
 
 
 @login_required(login_url="login/")
-@permission_required(['GigaGames.add_producto', 'GigaGames.delete_producto'], login_url="login/")
+@permission_required(['eGESVEN.add_producto', 'eGESVEN.delete_producto'], login_url="login/")
 def mantenedor_productos(request):
 
     return render(request, "mantenedor/producto/mantenedor_productos.html")
 
 
 @login_required(login_url="login/")
-@permission_required(['GigaGames.add_producto'], login_url="login/")
+@permission_required(['eGESVEN.add_producto'], login_url="login/")
 def agregar_producto(request):
 
     data = {
@@ -99,7 +99,7 @@ def agregar_producto(request):
     return render(request, "mantenedor/producto/agregar.html", data)
 
 @login_required(login_url="login/")
-@permission_required(['GigaGames.change_producto', 'GigaGames.delete_producto'], login_url="login/")
+@permission_required(['eGESVEN.change_producto', 'eGESVEN.delete_producto'], login_url="login/")
 def modificar_producto_lista(request):
 
     productos = Producto.objects.all()
@@ -111,7 +111,7 @@ def modificar_producto_lista(request):
     return render(request, "mantenedor/producto/listado_productos.html", data)
 
 @login_required(login_url="login/")
-@permission_required(['GigaGames.change_producto'], login_url="login/")
+@permission_required(['eGESVEN.change_producto'], login_url="login/")
 def modificar_producto(request, idproducto):
 
     producto = get_object_or_404(Producto, id = idproducto)
@@ -133,7 +133,7 @@ def modificar_producto(request, idproducto):
     return render(request, "mantenedor/producto/modificar.html", data)
 
 @login_required(login_url="login/")
-@permission_required(['GigaGames.delete_producto'], login_url="login/")
+@permission_required(['eGESVEN.delete_producto'], login_url="login/")
 def eliminar_producto(request, idproducto):
 
     producto = get_object_or_404(Producto, id = idproducto)

@@ -29,7 +29,7 @@ class Producto(models.Model):
         return self.nombre
 
 class Perfil(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE) 
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     telefono = models.IntegerField(null=True, blank=True)
     fecha_nacimiento = models.DateField(null=True, blank=True)
 
