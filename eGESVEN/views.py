@@ -51,14 +51,6 @@ def explorar(request):
 
     return render(request, "explorar.html", data)
 
-
-##Paginas para el pokemon
-def pokedex_api(request):
-    return render(request, 'pokedex_api.html')
-
-def quepokemoneres(request):
-    return render(request, 'quepokemoneres.html')
-
 def producto(request, id):
 
     producto = get_object_or_404(Producto, id = id)

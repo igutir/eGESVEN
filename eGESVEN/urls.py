@@ -8,10 +8,6 @@ urlpatterns = [
     path('explorar/', explorar, name="explorar"),
     path('categoria/<int:id>/', categoria, name="categoria"),
 
-    ##Paginas para el pokemon
-    path('pokedex_api/', pokedex_api, name="pokedex_api"),
-    path('quepokemoneres/', quepokemoneres, name="quepokemoneres"),
-
     path("login/", auth_views.LoginView.as_view(template_name="registration/login.html"), name="login"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path('registro_usuario/', registro_usuario, name="registro_usuario"),
